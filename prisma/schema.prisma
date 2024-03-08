@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model RoutePoint {
+  id            Int       @id @default(autoincrement())
+  name          String
+  timeDeparture DateTime?
+  timeArrival   DateTime?
+  route         Route?    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  routeId       Int?
+}
+
+model Route {
+  id     Int          @id @default(autoincrement())
+  name   String
+  points RoutePoint[]
+}
